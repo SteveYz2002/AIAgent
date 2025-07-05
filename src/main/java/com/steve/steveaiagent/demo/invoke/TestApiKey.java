@@ -5,5 +5,5 @@ package com.steve.steveaiagent.demo.invoke;
  */
 public interface TestApiKey {
 
-    String API_KEY = "xxxxxxxx";
+    String API_KEY = "<KEY>";
 }
