@@ -14,10 +14,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 基于文件持久化的对话记忆
+ */
 public class FileBasedChatMemory implements ChatMemory {
 
     private final String BASE_DIR;
-
     private static final Kryo kryo = new Kryo();
 
     static {
@@ -29,7 +31,7 @@ public class FileBasedChatMemory implements ChatMemory {
     // 构造对象时，指定文件保存目录
     public FileBasedChatMemory(String dir) {
         this.BASE_DIR = dir;
-        File baseDir = new File(BASE_DIR);
+        File baseDir = new File(dir);
         if (!baseDir.exists()) {
             baseDir.mkdirs();
         }
@@ -37,17 +39,14 @@ public class FileBasedChatMemory implements ChatMemory {
 
     @Override
     public void add(String conversationId, List<Message> messages) {
-        List<Message> messageList = getOrCreateConversation(conversationId);
-        messageList.addAll(messages);
-        saveConversation(conversationId, messageList);
+        List<Message> conversationMessages = getOrCreateConversation(conversationId);
+        conversationMessages.addAll(messages);
+        saveConversation(conversationId, conversationMessages);
     }
 
     @Override
-    public List<Message> get(String conversationId, int lastN) {
-        List<Message> messageList = getOrCreateConversation(conversationId);
-        return messageList.stream()
-                .skip(Math.max(0,messageList.size() - lastN))
-                .toList();
+    public List<Message> get(String conversationId) {
+        return getOrCreateConversation(conversationId);
     }
 
     @Override
@@ -58,11 +57,6 @@ public class FileBasedChatMemory implements ChatMemory {
         }
     }
 
-    /**
-     * 获取或创建会话消息的列表
-     * @param conversationId
-     * @return
-     */
     private List<Message> getOrCreateConversation(String conversationId) {
         File file = getConversationFile(conversationId);
         List<Message> messages = new ArrayList<>();
@@ -76,11 +70,6 @@ public class FileBasedChatMemory implements ChatMemory {
         return messages;
     }
 
-    /**
-     * 保存会话消息列表
-     * @param conversationId
-     * @param messages
-     */
     private void saveConversation(String conversationId, List<Message> messages) {
         File file = getConversationFile(conversationId);
         try (Output output = new Output(new FileOutputStream(file))) {
@@ -90,12 +79,6 @@ public class FileBasedChatMemory implements ChatMemory {
         }
     }
 
-    /**
-     * 每个会话文件单独保存
-     *
-     * @param conversationId
-     * @return
-     */
     private File getConversationFile(String conversationId) {
         return new File(BASE_DIR, conversationId + ".kryo");
     }

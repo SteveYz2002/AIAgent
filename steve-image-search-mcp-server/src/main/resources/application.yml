@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: steve-image-search-mcp-server
+  profiles:
+    active: sse
+    include: local
+server:
+  port: 8127
