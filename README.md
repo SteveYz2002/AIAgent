@@ -4,6 +4,12 @@
 
 基于 Spring Boot 3 与 Spring AI，结合 RAG、Tool Calling 及 MCP 协议，打造企业级 AI 情感陪伴助手——“恋爱补给站 AI智能体”。该系统能够为用户提供专业的情感指导与陪伴服务，具备多轮情景对话、记忆持久化和 RAG 知识库检索等核心能力。借助 ReAct 推理框架，智能体可自主规划任务、调用外部工具（如网页搜索、资源获取与 PDF 生成），独立完成诸如定制完整约会方案并输出文档等复杂情感任务。
 
+<img width="1896" height="865" alt="image" src="https://github.com/user-attachments/assets/5e9ff59f-3413-4c20-9b0a-e6299b77ab52" />
+
+<img width="1858" height="825" alt="image" src="https://github.com/user-attachments/assets/2312a4f3-04fd-4960-b71e-154855c90eb9" />
+
+<img width="1805" height="825" alt="image" src="https://github.com/user-attachments/assets/7734c2be-4f25-4aa5-a199-9396741e780b" />
+
 ## 技术栈
 
 - Java21 + Springboot3
